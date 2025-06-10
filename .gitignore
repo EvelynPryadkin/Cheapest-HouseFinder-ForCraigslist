@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# PyCharm project files
+.idea/
+
+# macOS junk
+.DS_Store
+
+# Log files
+*.log
+
+# Output files
+*.csv
+*.txt
