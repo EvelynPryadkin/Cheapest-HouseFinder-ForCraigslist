@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cheapest Housing Finder For Craigslist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Cheapest Housing Finder For Craigslist</h1>
+
+<form method="POST">
+    <label for="city">City (e.g., newyork, chicago):</label>
+    <input type="text" id="city" name="city" value="{{ city }}" required>
+
+    <label for="max_price">Max Price:</label>
+    <input type="number" id="max_price" name="max_price" value="{{ max_price }}" required>
+
+    <button type="submit">Search</button>
+</form>
+
+    {% if listings %}
+        <h2>{{ listings|length }} Listings Found:</h2>
+        <ul>
+        {% for l in listings %}
+            <li>
+                <strong>{{ l.price }}</strong> – {{ l.title }}<br>
+                <a href="{{ l.link }}" target="_blank">{{ l.link }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {% if request.method == "POST" %}
+            <p>No listings found for your search. Try a different city or price.</p>
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>
