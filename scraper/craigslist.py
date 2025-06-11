@@ -9,7 +9,18 @@ def get_listings(city='newyork', max_price=1000):
     }
 
     print(f"Requesting URL: {url}")
-    response = requests.get(url, headers=headers)
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+    except requests.exceptions.RequestException:
+        print("Failed to fetch listings — invalid city or connection issue.")
+        return [{
+            'title': f"Could not retrieve listings for '{city}'. Please check the city name.",
+            'price': '',
+            'link': '#'
+        }]
+
     print(f"Status code: {response.status_code}")
 
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -28,10 +39,8 @@ def get_listings(city='newyork', max_price=1000):
             link = link_tag['href']
             craigslist_price = price_tag.get_text(strip=True)
 
-
             clean_title = title.replace("o", "0")
             match = re.search(r"\$\d{3,5}", clean_title)
-
 
             if craigslist_price in ["$1", "$2", "$3", "$30", "$250", "$3", "$18", "$24"]:
                 final_price = match.group(0) if match else craigslist_price

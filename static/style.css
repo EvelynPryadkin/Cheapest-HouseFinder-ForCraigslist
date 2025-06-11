@@ -80,3 +80,13 @@ li {
 li:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
+
+p.error {
+    color: #e91e63;
+    background-color: #ffe6ef;
+    padding: 0.75em;
+    border: 1px solid #f48fb1;
+    border-radius: 8px;
+    margin-top: 1em;
+}
+

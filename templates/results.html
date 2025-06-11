@@ -9,29 +9,33 @@
 
     <h1>Cheapest Housing Finder For Craigslist</h1>
 
-<form method="POST">
-    <label for="city">City (e.g., newyork, chicago):</label>
-    <input type="text" id="city" name="city" value="{{ city }}" required>
+    <form method="POST">
+        <label for="city">City (e.g., newyork, chicago):</label>
+        <input type="text" id="city" name="city" value="{{ city }}" required>
 
-    <label for="max_price">Max Price:</label>
-    <input type="number" id="max_price" name="max_price" value="{{ max_price }}" required>
+        <label for="max_price">Max Price:</label>
+        <input type="number" id="max_price" name="max_price" value="{{ max_price }}" required>
 
-    <button type="submit">Search</button>
-</form>
+        <button type="submit">Search</button>
+    </form>
 
     {% if listings %}
-        <h2>{{ listings|length }} Listings Found:</h2>
-        <ul>
-        {% for l in listings %}
-            <li>
-                <strong>{{ l.price }}</strong> – {{ l.title }}<br>
-                <a href="{{ l.link }}" target="_blank">{{ l.link }}</a>
-            </li>
-        {% endfor %}
-        </ul>
+        {% if listings[0].link == '#' %}
+            <p class="error">{{ listings[0].title }}</p>
+        {% else %}
+            <h2>{{ listings|length }} Listings Found:</h2>
+            <ul>
+                {% for l in listings %}
+                    <li>
+                        <strong>{{ l.price }}</strong> – {{ l.title }}<br>
+                        <a href="{{ l.link }}" target="_blank">{{ l.link }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% else %}
         {% if request.method == "POST" %}
-            <p>No listings found for your search. Try a different city or price.</p>
+            <p class="error">No listings found for your search. Try a different city or price.</p>
         {% endif %}
     {% endif %}
 
